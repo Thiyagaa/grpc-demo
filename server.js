@@ -16,7 +16,8 @@ server.bind("localhost:40000",rpc.ServerCredentials.createInsecure())
 
 server.addService(todoPackage.Todo.service,{
     "createTodo" : createTodo,
-    "readTodo" : readTodo
+    "readTodo" : readTodo,
+    "readTodoStream" : readTodoStream
 });
 
 server.start();
@@ -35,4 +36,9 @@ function createTodo(call, callback){
 
 function readTodo(call, callback){
     callback(null,{"items": todos});
+}
+
+function readTodoStream(call, callback){
+    todos.forEach(i=> call.write(i));
+    call.end();
 }

@@ -19,3 +19,13 @@ client.createTodo({
 client.readTodo({},(error,response)=>{
     console.log("received response from server " + JSON.stringify(response));
 })
+
+const call = client.readTodoStream();
+
+call.on("data",item=>{
+    console.log( " received data in stream from server ", JSON.stringify(item));
+})
+
+call.on("end",e=>{
+    console.log( " closing server stream ");
+})
